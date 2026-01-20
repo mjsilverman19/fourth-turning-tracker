@@ -1,0 +1,137 @@
+{
+  "japaneseHedgingSpread": {
+    "name": "Japanese Hedging Cost Spread",
+    "unit": "bps",
+    "description": "US_10Y - JGB_10Y - FX_HEDGE_COST. Negative values indicate Japanese institutions have incentive to exit Treasuries.",
+    "normal": { "min": 0 },
+    "warning": { "min": -50, "max": 0 },
+    "danger": { "min": -100, "max": -50 },
+    "critical": { "max": -100 },
+    "inverted": true,
+    "gaugeMin": -150,
+    "gaugeMax": 100
+  },
+  "crossCurrencyBasis": {
+    "name": "Cross-Currency Basis (EUR/USD 5Y)",
+    "unit": "bps",
+    "description": "Narrowing or positive basis indicates reduced global demand for dollar funding.",
+    "normal": { "max": -15 },
+    "warning": { "min": -15, "max": -5 },
+    "danger": { "min": -5, "max": 5 },
+    "critical": { "min": 5 },
+    "inverted": false,
+    "gaugeMin": -50,
+    "gaugeMax": 20
+  },
+  "auctionTail": {
+    "name": "Treasury Auction Tail (20Y/30Y Avg)",
+    "unit": "bps",
+    "description": "Difference between auction high yield and when-issued yield. Consistent tails > 3bps indicate insufficient demand.",
+    "normal": { "max": 2 },
+    "warning": { "min": 2, "max": 3 },
+    "danger": { "min": 3, "max": 5 },
+    "critical": { "min": 5 },
+    "inverted": false,
+    "gaugeMin": -1,
+    "gaugeMax": 8
+  },
+  "goldTreasuryRoC": {
+    "name": "Gold/Treasury Ratio (12mo Change)",
+    "unit": "%",
+    "description": "Annual rate of change in Gold/TLT ratio. Acceleration indicates substitution from Treasuries to gold.",
+    "normal": { "max": 0.10 },
+    "warning": { "min": 0.10, "max": 0.20 },
+    "danger": { "min": 0.20, "max": 0.35 },
+    "critical": { "min": 0.35 },
+    "inverted": false,
+    "gaugeMin": -0.10,
+    "gaugeMax": 0.50,
+    "displayMultiplier": 100
+  },
+  "interestExpenseRatio": {
+    "name": "Federal Interest Expense Ratio",
+    "unit": "%",
+    "description": "TTM interest expense as percentage of TTM receipts. Above 25% indicates unsustainable arithmetic.",
+    "normal": { "max": 0.18 },
+    "warning": { "min": 0.18, "max": 0.25 },
+    "danger": { "min": 0.25, "max": 0.35 },
+    "critical": { "min": 0.35 },
+    "inverted": false,
+    "gaugeMin": 0.05,
+    "gaugeMax": 0.40,
+    "displayMultiplier": 100
+  },
+  "stageAssessment": {
+    "preCrisis": {
+      "description": "Pre-Crisis - Structural vulnerabilities present but no acute stress",
+      "minTriggers": 0
+    },
+    "stage1": {
+      "description": "Stage 1 - Traditional financial crisis (equity selloff, credit stress)",
+      "triggers": {
+        "vix": { "threshold": 40, "comparison": ">" },
+        "hySpread": { "threshold": 700, "comparison": ">" },
+        "auctionTail": { "threshold": 4, "comparison": ">" },
+        "hedgingSpread": { "threshold": -50, "comparison": "<" },
+        "dollarEquityCorrelation": { "threshold": 0, "comparison": "<", "description": "Dollar weakening during equity selloff" }
+      },
+      "minTriggers": 3
+    },
+    "stage2": {
+      "description": "Stage 2 - Intervention phase (Fed balance sheet expansion, policy response)",
+      "triggers": {
+        "fedBalanceSheetExpansion": { "threshold": 2000000000000, "comparison": ">", "description": "Fed balance sheet expansion > $2T from baseline" },
+        "inflationBreakevens": { "threshold": 0.04, "comparison": ">", "description": "5Y or 10Y breakevens > 4%" },
+        "dollarDecline": { "threshold": -0.15, "comparison": "<", "description": "Dollar down > 15% from crisis start" },
+        "goldRally": { "threshold": 0.30, "comparison": ">", "description": "Gold up > 30% from crisis start" }
+      },
+      "minTriggers": 2
+    },
+    "stage3": {
+      "description": "Stage 3 - Credibility crisis (dollar loses safe haven status)",
+      "triggers": {
+        "sustainedDollarWeakness": { "threshold": -0.20, "comparison": "<" },
+        "goldAcceleration": { "threshold": 0.50, "comparison": ">" },
+        "foreignSellingAcceleration": { "threshold": -0.10, "comparison": "<", "description": "6-month foreign holdings change" }
+      },
+      "minTriggers": 2
+    },
+    "stage4": {
+      "description": "Stage 4 - Regime transition (new monetary order emerging)",
+      "triggers": {
+        "hyperinflationSignals": { "threshold": 0.10, "comparison": ">", "description": "CPI > 10% annualized" },
+        "currencyControls": { "threshold": true, "comparison": "=", "description": "Capital controls implemented" }
+      },
+      "minTriggers": 1
+    }
+  },
+  "secondaryIndicators": {
+    "vix": {
+      "name": "VIX",
+      "warning": 25,
+      "danger": 40,
+      "critical": 60
+    },
+    "hySpread": {
+      "name": "High Yield Spread",
+      "unit": "bps",
+      "warning": 400,
+      "danger": 600,
+      "critical": 800
+    },
+    "sofrTreasurySpread": {
+      "name": "SOFR-Treasury Spread",
+      "unit": "bps",
+      "warning": 20,
+      "danger": 40,
+      "critical": 75
+    },
+    "cdsSpread": {
+      "name": "5Y US Sovereign CDS",
+      "unit": "bps",
+      "warning": 30,
+      "danger": 50,
+      "critical": 100
+    }
+  }
+}
