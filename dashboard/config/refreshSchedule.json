@@ -1,0 +1,126 @@
+{
+  "schedules": {
+    "yields": {
+      "description": "Treasury and JGB yields from FRED",
+      "cronExpression": "0 18 * * 1-5",
+      "cronDescription": "Daily at 6pm ET on weekdays",
+      "cacheTTL": 14400,
+      "cacheTTLDescription": "4 hours",
+      "series": ["DGS10", "DGS30", "DGS5", "T5YIE", "T10YIE"]
+    },
+    "auctionResults": {
+      "description": "Treasury auction results",
+      "cronExpression": "0 14 * * 1-5",
+      "cronDescription": "Daily at 2pm ET on weekdays (after typical auction times)",
+      "cacheTTL": 86400,
+      "cacheTTLDescription": "24 hours",
+      "manualVerification": true
+    },
+    "ticData": {
+      "description": "Foreign holdings data (TIC)",
+      "cronExpression": "0 10 15 * *",
+      "cronDescription": "15th of each month at 10am ET (typical release day)",
+      "cacheTTL": 604800,
+      "cacheTTLDescription": "7 days",
+      "lagDescription": "Data released with 6-8 week lag"
+    },
+    "goldPrice": {
+      "description": "Gold spot price",
+      "cronExpression": "0 */4 * * *",
+      "cronDescription": "Every 4 hours",
+      "cacheTTL": 3600,
+      "cacheTTLDescription": "1 hour"
+    },
+    "fedBalanceSheet": {
+      "description": "Federal Reserve balance sheet",
+      "cronExpression": "0 17 * * 4",
+      "cronDescription": "Thursdays at 5pm ET (Fed release day)",
+      "cacheTTL": 86400,
+      "cacheTTLDescription": "24 hours",
+      "series": ["WALCL"]
+    },
+    "basisSwap": {
+      "description": "Cross-currency basis swap data",
+      "cronExpression": "0 18 * * 1-5",
+      "cronDescription": "Daily at 6pm ET on weekdays",
+      "cacheTTL": 14400,
+      "cacheTTLDescription": "4 hours",
+      "note": "May require manual entry if API unavailable"
+    },
+    "fiscalData": {
+      "description": "Monthly Treasury Statement (interest expense, receipts)",
+      "cronExpression": "0 14 8 * *",
+      "cronDescription": "8th of each month at 2pm ET (typical release day)",
+      "cacheTTL": 604800,
+      "cacheTTLDescription": "7 days"
+    },
+    "marketStress": {
+      "description": "VIX, high yield spreads, other stress indicators",
+      "cronExpression": "0 17 * * 1-5",
+      "cronDescription": "Daily at 5pm ET on weekdays",
+      "cacheTTL": 7200,
+      "cacheTTLDescription": "2 hours",
+      "series": ["VIXCLS", "BAMLH0A0HYM2", "SOFR"]
+    },
+    "centralBankGold": {
+      "description": "World Gold Council central bank data",
+      "cronExpression": "0 10 1 1,4,7,10 *",
+      "cronDescription": "Quarterly on 1st of Jan/Apr/Jul/Oct at 10am",
+      "cacheTTL": 2592000,
+      "cacheTTLDescription": "30 days",
+      "manualEntry": true
+    }
+  },
+  "upcomingEvents": {
+    "treasuryAuctions": {
+      "description": "Scheduled Treasury auctions",
+      "source": "https://www.treasurydirect.gov/auctions/upcoming/",
+      "refreshFrequency": "weekly"
+    },
+    "ticRelease": {
+      "description": "TIC data release schedule",
+      "source": "https://home.treasury.gov/data/treasury-international-capital-tic-system",
+      "typicalDay": "15th of month"
+    },
+    "fomc": {
+      "description": "FOMC meeting dates",
+      "source": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+    },
+    "debtCeiling": {
+      "description": "Debt ceiling deadlines",
+      "source": "Manual tracking",
+      "note": "Check Treasury announcements"
+    }
+  },
+  "staleness": {
+    "thresholds": {
+      "fresh": 3600,
+      "freshDescription": "Under 1 hour",
+      "acceptable": 86400,
+      "acceptableDescription": "Under 24 hours",
+      "stale": 604800,
+      "staleDescription": "Under 7 days",
+      "veryStale": 2592000,
+      "veryStaleDescription": "Under 30 days"
+    },
+    "byDataType": {
+      "marketData": {
+        "maxAge": 86400,
+        "warningAge": 3600
+      },
+      "auctionData": {
+        "maxAge": 604800,
+        "warningAge": 172800
+      },
+      "ticData": {
+        "maxAge": 5184000,
+        "warningAge": 2592000,
+        "note": "TIC data has inherent 6-8 week lag"
+      },
+      "fiscalData": {
+        "maxAge": 2592000,
+        "warningAge": 604800
+      }
+    }
+  }
+}

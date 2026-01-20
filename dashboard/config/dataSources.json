@@ -1,0 +1,158 @@
+{
+  "fred": {
+    "baseUrl": "https://api.stlouisfed.org/fred/series/observations",
+    "series": {
+      "DGS10": {
+        "name": "10-Year Treasury Constant Maturity Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "DGS30": {
+        "name": "30-Year Treasury Constant Maturity Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "DGS5": {
+        "name": "5-Year Treasury Constant Maturity Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "T5YIE": {
+        "name": "5-Year Breakeven Inflation Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "T10YIE": {
+        "name": "10-Year Breakeven Inflation Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "WALCL": {
+        "name": "Federal Reserve Total Assets",
+        "frequency": "weekly",
+        "units": "millions_usd"
+      },
+      "RRPONTSYD": {
+        "name": "Overnight Reverse Repurchase Agreements",
+        "frequency": "daily",
+        "units": "billions_usd"
+      },
+      "GOLDPMGBD228NLBM": {
+        "name": "Gold Fixing Price (London PM)",
+        "frequency": "daily",
+        "units": "usd_per_troy_ounce"
+      },
+      "DTWEXBGS": {
+        "name": "Trade Weighted U.S. Dollar Index: Broad, Goods and Services",
+        "frequency": "daily",
+        "units": "index"
+      },
+      "BAMLH0A0HYM2": {
+        "name": "ICE BofA US High Yield Index Option-Adjusted Spread",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "VIXCLS": {
+        "name": "CBOE Volatility Index: VIX",
+        "frequency": "daily",
+        "units": "index"
+      },
+      "SOFR": {
+        "name": "Secured Overnight Financing Rate",
+        "frequency": "daily",
+        "units": "percent"
+      },
+      "FYFSGDA188S": {
+        "name": "Federal Surplus or Deficit as Percent of GDP",
+        "frequency": "annual",
+        "units": "percent_gdp"
+      }
+    }
+  },
+  "treasury": {
+    "auctionResults": {
+      "baseUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query",
+      "description": "Treasury auction results including high yield, when-issued yield"
+    },
+    "monthlyStatement": {
+      "baseUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/mts/mts_table_5",
+      "description": "Monthly Treasury Statement - interest expense and receipts"
+    },
+    "debtOutstanding": {
+      "baseUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_outstanding",
+      "description": "Public debt outstanding"
+    }
+  },
+  "tic": {
+    "baseUrl": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/title_iii",
+    "altUrl": "https://ticdata.treasury.gov/resource-center/data-chart-center/tic/Documents",
+    "description": "Treasury International Capital - foreign holdings of US securities",
+    "dataFiles": {
+      "majorHolders": "mfh.txt",
+      "aggregate": "shla.txt"
+    }
+  },
+  "boj": {
+    "jgbYield": {
+      "description": "10-Year Japanese Government Bond Yield",
+      "sources": [
+        {
+          "name": "Yahoo Finance",
+          "symbol": "^TNX",
+          "note": "May need to use proxy or scraping"
+        },
+        {
+          "name": "Investing.com",
+          "url": "https://www.investing.com/rates-bonds/japan-10-year-bond-yield"
+        },
+        {
+          "name": "BOJ Direct",
+          "url": "https://www.boj.or.jp/en/statistics/index.htm"
+        }
+      ]
+    }
+  },
+  "basisSwap": {
+    "description": "Cross-currency basis swap data - premium data source required",
+    "sources": [
+      {
+        "name": "Bloomberg Terminal",
+        "note": "Requires subscription"
+      },
+      {
+        "name": "Investing.com",
+        "note": "May have limited data"
+      }
+    ],
+    "proxySeries": {
+      "description": "Can approximate using interest rate differentials",
+      "method": "Use FRED series for rate differentials and estimate basis"
+    }
+  },
+  "etf": {
+    "tlt": {
+      "description": "iShares 20+ Year Treasury Bond ETF",
+      "symbol": "TLT",
+      "use": "Proxy for long-dated Treasury prices in Gold/Treasury ratio"
+    },
+    "gld": {
+      "description": "SPDR Gold Shares",
+      "symbol": "GLD",
+      "use": "Alternative gold price proxy"
+    }
+  },
+  "worldGoldCouncil": {
+    "baseUrl": "https://www.gold.org/goldhub/data",
+    "datasets": {
+      "centralBankHoldings": {
+        "description": "Central bank gold reserves by country",
+        "frequency": "monthly"
+      },
+      "centralBankPurchases": {
+        "description": "Central bank gold purchases/sales",
+        "frequency": "quarterly"
+      }
+    },
+    "note": "May require manual data entry or web scraping"
+  }
+}
