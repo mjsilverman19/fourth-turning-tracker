@@ -2,11 +2,8 @@
   "name": "hegemony-monitoring-dashboard",
   "version": "1.0.0",
   "description": "Dashboard tracking leading indicators of dollar hegemony erosion and potential monetary regime transition",
-  "main": "api/server.local.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "node api/server.local.js",
-    "client": "vite",
+    "dev": "vercel dev",
     "build": "vite build",
     "preview": "vite preview",
     "backtest": "node scripts/backtest.js",

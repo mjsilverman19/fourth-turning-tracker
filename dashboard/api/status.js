@@ -1,10 +1,35 @@
-const fredService = require('./services/fredService');
+const fredService = require('../lib/services/fredService');
+const cache = require('../lib/utils/cache');
 
 /**
- * GET /api/status
- * Data source status endpoint
+ * /api/status
+ * GET - Data source status check
+ * GET ?action=cache-stats - Cache statistics
+ * POST ?action=cache-flush - Flush cache
  */
 module.exports = async function handler(req, res) {
+  const { action } = req.query;
+
+  // Cache stats
+  if (action === 'cache-stats' && req.method === 'GET') {
+    return res.json({
+      stats: cache.getStats(),
+      keys: cache.keys(),
+      note: 'Cache is ephemeral in serverless environment',
+    });
+  }
+
+  // Cache flush
+  if (action === 'cache-flush' && req.method === 'POST') {
+    cache.flush();
+    return res.json({
+      success: true,
+      message: 'Cache flushed',
+      note: 'In serverless environment, this only affects the current invocation',
+    });
+  }
+
+  // Default: status check
   if (req.method !== 'GET') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
@@ -13,8 +38,6 @@ module.exports = async function handler(req, res) {
     const status = {
       fred: { status: 'unknown', lastCheck: null },
       treasury: { status: 'unknown', lastCheck: null },
-      gold: { status: 'unknown', lastCheck: null },
-      tic: { status: 'unknown', lastCheck: null },
     };
 
     // Check FRED API
@@ -29,7 +52,6 @@ module.exports = async function handler(req, res) {
       success: true,
       status,
       apiKeyConfigured: !!process.env.FRED_API_KEY,
-      environment: 'vercel-serverless',
     });
   } catch (error) {
     res.status(500).json({
